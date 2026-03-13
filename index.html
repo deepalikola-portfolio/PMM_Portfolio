@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepali Kola — Product Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF9F6;
+    --white: #FFFFFF;
+    --ink: #0E0E0E;
+    --mid: #555555;
+    --soft: #999999;
+    --teal: #00BFA5;
+    --teal-light: #E6F7F5;
+    --rule: #E8E5DF;
+    --card-bg: #F5F3EF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(250,249,246,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-name { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; letter-spacing:.02em; color:var(--ink); text-decoration:none; }
+  .nav-links { display:flex; gap:36px; list-style:none; }
+  .nav-links a { font-size:13px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color .2s; }
+  .nav-links a:hover { color:var(--teal); }
+
+  /* HERO */
+  .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:120px 60px 80px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-200px; right:-200px; width:700px; height:700px; background:radial-gradient(circle,rgba(0,191,165,.06) 0%,transparent 70%); pointer-events:none; }
+  .hero-eyebrow { font-size:12px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--teal); margin-bottom:28px; opacity:0; animation:fadeUp .8s ease forwards .2s; }
+  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(52px,7vw,96px); font-weight:600; line-height:1.0; letter-spacing:-.01em; color:var(--ink); max-width:900px; opacity:0; animation:fadeUp .8s ease forwards .4s; }
+  .hero-title em { font-style:italic; color:var(--teal); }
+  .hero-sub { font-size:17px; font-weight:300; color:var(--mid); max-width:540px; line-height:1.7; margin-top:36px; opacity:0; animation:fadeUp .8s ease forwards .6s; }
+  .hero-industries { display:flex; gap:12px; margin-top:48px; flex-wrap:wrap; opacity:0; animation:fadeUp .8s ease forwards .8s; }
+  .industry-tag { font-size:12px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; padding:8px 16px; border:1px solid var(--rule); color:var(--mid); background:var(--white); }
+  .industry-tag.active { border-color:var(--teal); color:var(--teal); background:var(--teal-light); }
+  .hero-scroll { position:absolute; bottom:48px; left:60px; display:flex; align-items:center; gap:12px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--soft); opacity:0; animation:fadeUp .8s ease forwards 1.2s; }
+  .scroll-line { width:40px; height:1px; background:var(--soft); }
+
+  /* SECTION */
+  section { padding:100px 60px; max-width:1200px; margin:0 auto; }
+  .section-label { font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--teal); margin-bottom:20px; }
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,4vw,56px); font-weight:600; line-height:1.1; color:var(--ink); margin-bottom:24px; }
+  .section-rule { width:100%; height:1px; background:var(--rule); margin-bottom:60px; }
+
+  /* ABOUT */
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+  .about-text p { font-size:16px; line-height:1.85; color:var(--mid); margin-bottom:20px; }
+  .about-text p strong { color:var(--ink); font-weight:500; }
+  .about-details { display:flex; flex-direction:column; gap:28px; }
+  .detail-item { border-top:1px solid var(--rule); padding-top:20px; }
+  .detail-label { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--soft); margin-bottom:8px; }
+  .detail-value { font-size:15px; color:var(--ink); line-height:1.6; }
+
+  /* APPROACH */
+  .approach-section { background:var(--ink); padding:100px 60px; margin:0; max-width:none; }
+  .approach-inner { max-width:1200px; margin:0 auto; }
+  .approach-section .section-title { color:var(--white); }
+  .approach-section .section-rule { background:rgba(255,255,255,.1); }
+  .approach-intro { font-size:17px; line-height:1.8; color:rgba(255,255,255,.6); max-width:680px; margin-bottom:60px; }
+  .approach-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+  .approach-card { background:rgba(255,255,255,.04); padding:40px 36px; border-top:2px solid transparent; transition:border-color .3s,background .3s; }
+  .approach-card:hover { border-top-color:var(--teal); background:rgba(255,255,255,.07); }
+  .approach-industry { font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--teal); margin-bottom:16px; }
+  .approach-card h3 { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:600; color:var(--white); margin-bottom:16px; line-height:1.2; }
+  .approach-card p { font-size:14px; line-height:1.75; color:rgba(255,255,255,.5); }
+
+  /* PROJECTS */
+  .projects-grid { display:flex; flex-direction:column; gap:2px; }
+  .project-card { display:grid; grid-template-columns:80px 1fr auto; align-items:start; gap:40px; padding:44px 0; border-top:1px solid var(--rule); text-decoration:none; color:inherit; position:relative; }
+  .project-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:var(--rule); }
+  .project-card:hover .project-title { color:var(--teal); }
+  .project-num { font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:400; color:var(--rule); line-height:1; padding-top:6px; }
+  .project-card.active .project-num { color:var(--teal); opacity:.4; }
+  .project-meta { display:flex; flex-direction:column; gap:10px; }
+  .project-tags { display:flex; gap:8px; flex-wrap:wrap; }
+  .project-tag { font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; padding:4px 10px; background:var(--card-bg); color:var(--soft); }
+  .project-tag.live { background:var(--teal-light); color:var(--teal); }
+  .project-title { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:600; color:var(--ink); line-height:1.1; transition:color .2s; }
+  .project-desc { font-size:14px; line-height:1.7; color:var(--mid); max-width:560px; }
+
+  /* PROJECT STATUS — consistent alignment across all cards */
+  .project-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+    padding-top: 6px;
+    min-width: 120px;
+  }
+  .status-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--teal); color: var(--teal);
+    text-decoration: none; white-space: nowrap;
+    transition: background .2s, color .2s;
+    cursor: pointer;
+  }
+  .status-badge:hover { background: var(--teal); color: var(--white); }
+  .status-badge.coming { border-color:var(--rule); color:var(--soft); cursor:default; }
+  .status-badge.coming:hover { background:transparent; color:var(--soft); }
+  .status-badge.doc { border-color: var(--mid); color: var(--mid); }
+  .status-badge.doc:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .project-arrow { font-size:20px; color:var(--soft); transition:transform .2s,color .2s; line-height:1; }
+  .project-card:hover .project-arrow { transform:translate(4px,-4px); color:var(--teal); }
+
+  /* CONTACT */
+  .contact-section { padding:100px 60px; border-top:1px solid var(--rule); max-width:none; margin:0; background:var(--white); }
+  .contact-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:end; }
+  .contact-title { font-family:'Cormorant Garamond',serif; font-size:clamp(40px,5vw,72px); font-weight:600; line-height:1.0; color:var(--ink); margin-bottom:24px; }
+  .contact-title em { font-style:italic; color:var(--teal); }
+  .contact-sub { font-size:15px; line-height:1.8; color:var(--mid); max-width:400px; }
+  .contact-links { display:flex; flex-direction:column; gap:24px; }
+  .contact-link { display:flex; justify-content:space-between; align-items:center; padding:24px 0; border-top:1px solid var(--rule); text-decoration:none; color:var(--ink); transition:color .2s; }
+  .contact-link:hover { color:var(--teal); }
+  .contact-link-label { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--soft); margin-bottom:4px; }
+  .contact-link-value { font-size:16px; font-weight:400; }
+  .contact-link-arrow { font-size:18px; opacity:.4; transition:transform .2s,opacity .2s; }
+  .contact-link:hover .contact-link-arrow { transform:translate(4px,-4px); opacity:1; }
+
+  /* FOOTER */
+  footer { padding:28px 60px; background:var(--white); border-top:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center; }
+  footer p { font-size:12px; color:var(--soft); letter-spacing:.04em; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  .js-reveal { opacity:0; transform:translateY(20px); }
+  .js-reveal.visible { opacity:1; transform:translateY(0); transition:opacity .7s ease,transform .7s ease; }
+
+  /* ── STRATEGY DOC ── */
+  .doc-back { display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--soft); text-decoration:none; margin-bottom:60px; transition:color .2s; cursor:pointer; }
+  .doc-back:hover { color:var(--teal); }
+  .doc-header { margin-bottom:60px; border-bottom:1px solid var(--rule); padding-bottom:40px; }
+  .doc-kicker { font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--teal); margin-bottom:16px; }
+  .doc-title { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,5vw,64px); font-weight:600; line-height:1.05; color:var(--ink); margin-bottom:20px; }
+  .doc-meta { font-size:13px; color:var(--soft); letter-spacing:.04em; line-height:1.8; }
+  .doc-intro { font-size:18px; line-height:1.85; color:var(--mid); max-width:760px; margin-bottom:60px; font-style:italic; border-left:3px solid var(--teal); padding-left:24px; }
+  .doc-toc { background:var(--card-bg); padding:36px 40px; margin-bottom:80px; }
+  .doc-toc h4 { font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--soft); margin-bottom:20px; }
+  .doc-toc ol { list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:8px 40px; }
+  .doc-toc li { font-size:13px; color:var(--mid); padding:6px 0; border-bottom:1px solid var(--rule); display:flex; gap:12px; }
+  .doc-toc li a { color:var(--mid); text-decoration:none; transition:color .2s; }
+  .doc-toc li a:hover { color:var(--teal); }
+  .toc-num { font-family:'Cormorant Garamond',serif; font-size:15px; color:var(--teal); opacity:.6; flex-shrink:0; }
+  .doc-section { margin-bottom:72px; scroll-margin-top:100px; }
+  .doc-section-num { font-family:'Cormorant Garamond',serif; font-size:72px; font-weight:400; color:var(--rule); line-height:1; margin-bottom:-8px; }
+  .doc-section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(26px,3vw,38px); font-weight:600; color:var(--ink); margin-bottom:24px; line-height:1.15; }
+  .doc-section-rule { width:48px; height:2px; background:var(--teal); margin-bottom:28px; }
+  .doc-body { font-size:15px; line-height:1.85; color:var(--mid); max-width:760px; }
+  .doc-body p { margin-bottom:16px; }
+  .doc-body strong { color:var(--ink); font-weight:500; }
+  .doc-subsection { font-size:13px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); margin:36px 0 16px; }
+  .doc-table-wrap { overflow-x:auto; margin:24px 0 32px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { text-align:left; font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--soft); padding:10px 16px; border-bottom:2px solid var(--rule); background:var(--card-bg); }
+  tbody tr { border-bottom:1px solid var(--rule); transition:background .15s; }
+  tbody tr:hover { background:var(--teal-light); }
+  tbody td { padding:12px 16px; color:var(--mid); vertical-align:top; line-height:1.6; }
+  tbody td:first-child { color:var(--ink); }
+  tbody td strong { color:var(--ink); font-weight:500; }
+  .doc-callout { background:var(--ink); color:rgba(255,255,255,.85); padding:32px 36px; margin:32px 0; font-size:15px; line-height:1.8; max-width:760px; }
+  .doc-callout strong { color:var(--teal); font-weight:500; }
+  .doc-quote { border-left:3px solid var(--teal); padding:16px 24px; margin:20px 0; background:var(--teal-light); font-size:14px; line-height:1.75; color:var(--ink); max-width:680px; }
+  .doc-quote cite { display:block; margin-top:10px; font-size:12px; color:var(--soft); font-style:normal; letter-spacing:.06em; }
+  .hypothesis-grid { display:flex; flex-direction:column; gap:24px; margin:24px 0; }
+  .hypothesis-card { background:var(--card-bg); padding:32px 36px; border-left:3px solid var(--teal); }
+  .hypothesis-label { font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .hypothesis-claim { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:var(--ink); margin-bottom:14px; line-height:1.25; }
+  .hypothesis-body { font-size:13px; line-height:1.75; color:var(--mid); }
+  .hypothesis-body p { margin-bottom:10px; }
+  .hypothesis-body strong { color:var(--ink); font-weight:500; }
+
+  /* RESPONSIVE */
+  @media (max-width:768px) {
+    nav { padding:18px 24px; }
+    .nav-links { display:none; }
+    .hero { padding:100px 24px 60px; }
+    section { padding:60px 24px; }
+    .about-grid { grid-template-columns:1fr; gap:40px; }
+    .approach-section { padding:60px 24px; }
+    .approach-grid { grid-template-columns:1fr; }
+    .project-card { grid-template-columns:48px 1fr; gap:20px; }
+    .project-status { display:none; }
+    .contact-section { padding:60px 24px; }
+    .contact-inner { grid-template-columns:1fr; gap:40px; }
+    footer { padding:20px 24px; flex-direction:column; gap:8px; text-align:center; }
+    #strat-doc-page > div { padding:60px 24px; }
+    .doc-toc ol { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-name" href="#" onclick="showMain();return false;">Deepali Kola</a>
+  <ul class="nav-links">
+    <li><a href="#about" onclick="showMain()">About</a></li>
+    <li><a href="#approach" onclick="showMain()">Approach</a></li>
+    <li><a href="#projects" onclick="showMain()">Work</a></li>
+    <li><a href="#contact" onclick="showMain()">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ════════════════════ MAIN SITE ════════════════════ -->
+<div id="main-site">
+
+<div class="hero">
+  <p class="hero-eyebrow">Product Marketing · AI · Energy · Infrastructure</p>
+  <h1 class="hero-title">Making hard technology<br><em>feel inevitable</em></h1>
+  <p class="hero-sub">I'm Deepali Kola — a product marketer studying the gap between what technology can do and what people actually trust it to do. My work lives in that gap.</p>
+  <div class="hero-industries">
+    <span class="industry-tag active">AI Consumer</span>
+    <span class="industry-tag">Clean Energy</span>
+    <span class="industry-tag">AI Infrastructure</span>
+  </div>
+  <div class="hero-scroll"><span class="scroll-line"></span><span>Scroll</span></div>
+</div>
+
+<section id="about">
+  <p class="section-label">About</p>
+  <div class="section-rule"></div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I'm a final-semester student at <strong>W.P. Carey School of Business, ASU</strong>, graduating May 2026 with a B.A. in Corporate Accounting and continuing into the MSBA program. I've spent the last two years building messaging matrices for 30+ AI and cloud solutions at the AWS Cloud Innovation Center, running go-to-market workflows end-to-end, and watching very smart technology sit unused because nobody built the bridge between capability and trust.</p>
+      <p>That's the thread running through everything I build. <strong>Not how to sell technology — how to make it feel safe to adopt.</strong> Whether it's an iPhone owner who hasn't turned on Apple Intelligence, a homeowner sitting on the fence about solar, or an enterprise team skeptical of AI infrastructure — the psychology of hesitation is the same. The marketing playbook shouldn't be.</p>
+      <p>I'm building a portfolio of three interactive projects, each targeting a different industry, to show that gap — and how to close it.</p>
+    </div>
+    <div class="about-details">
+      <div class="detail-item"><p class="detail-label">Currently</p><p class="detail-value">Product Marketing & Strategy Intern<br>AWS Cloud Innovation Center, Scottsdale AZ</p></div>
+      <div class="detail-item"><p class="detail-label">Education</p><p class="detail-value">B.A. Corporate Accounting · MSBA (incoming)<br>W.P. Carey School of Business, ASU · May 2026</p></div>
+      <div class="detail-item"><p class="detail-label">Focus areas</p><p class="detail-value">Demand generation · AI adoption marketing<br>B2B & B2C go-to-market · Trust-gap frameworks</p></div>
+      <div class="detail-item"><p class="detail-label">Based in</p><p class="detail-value">Tempe, Arizona · Open to relocation anywhere</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="approach-section" id="approach">
+  <div class="approach-inner">
+    <p class="section-label" style="color:rgba(255,255,255,.4);">Approach</p>
+    <h2 class="section-title">Three industries.<br>One marketing problem.</h2>
+    <div class="section-rule"></div>
+    <p class="approach-intro">AI features, clean energy, and AI infrastructure each face the same adoption wall — people don't distrust the product, they distrust the change. My portfolio explores one marketing framework applied across three different trust gaps.</p>
+    <div class="approach-grid">
+      <div class="approach-card reveal"><p class="approach-industry">AI Consumer</p><h3>Feature adoption hesitation</h3><p>76% of eligible users haven't activated AI features on their devices. The technology is already in their pocket. The gap is psychological — awareness, privacy friction, or loss aversion. Each needs a different intervention.</p></div>
+      <div class="approach-card reveal"><p class="approach-industry">Clean Energy</p><h3>The clean energy trust gap</h3><p>Consumers want sustainable energy but hesitate at the point of commitment. The marketing problem isn't generating interest — it's converting consideration into action when the stakes feel permanent and the technology still feels new.</p></div>
+      <div class="approach-card reveal"><p class="approach-industry">AI Infrastructure</p><h3>Enterprise AI skepticism</h3><p>Enterprise buyers are more sceptical of AI infrastructure claims than any other category. The activation gap here is about proof — not demos, not case studies, but the specific signals that make an IT decision maker feel safe saying yes.</p></div>
+    </div>
+  </div>
+</div>
+
+<section id="projects">
+  <p class="section-label">Work</p>
+  <h2 class="section-title">Portfolio projects</h2>
+  <div class="section-rule"></div>
+  <div class="projects-grid">
+
+    <!-- Project 01 -->
+    <a class="project-card active reveal" href="https://deepali-activation-gap.tiiny.site/" target="_blank">
+      <div class="project-num">01</div>
+      <div class="project-meta">
+        <div class="project-tags"><span class="project-tag live">Live</span><span class="project-tag">AI Consumer</span><span class="project-tag">Interactive Tool</span></div>
+        <h3 class="project-title">Closing the Activation Gap</h3>
+        <p class="project-desc">An interactive diagnostic that identifies where a user is psychologically stuck on AI feature adoption and delivers a personalised path to activation. Built on a three-stage behavioural framework — awareness gap, privacy friction, decision paralysis.</p>
+      </div>
+      <div class="project-status">
+        <span class="status-badge">Live ↗</span>
+        <span class="project-arrow">↗</span>
+      </div>
+    </a>
+
+    <!-- Project 02 — GridGap (two independent CTAs, no wrapping anchor) -->
+    <div class="project-card active reveal">
+      <div class="project-num">02</div>
+      <div class="project-meta">
+        <div class="project-tags"><span class="project-tag live">Live</span><span class="project-tag">Clean Energy</span><span class="project-tag">Interactive Tool</span></div>
+        <h3 class="project-title">GridGap — Energy Adoption Diagnostic</h3>
+        <p class="project-desc">A residential clean energy adoption diagnostic targeting the demand gen problem facing Tesla Energy, Google Nest, and the Utilize Coalition. Six questions, five-layer behavioral segmentation, and a personalised result by housing situation, technology stack, bill pain, market, and psychological stage. Paired with a 12-section product strategy doc including A/B test designs and conversion lift hypotheses — all implemented in the live tool.</p>
+      </div>
+      <div class="project-status">
+        <a class="status-badge" href="https://gridgap.vercel.app/" target="_blank">Live ↗</a>
+        <a class="status-badge doc" href="#" onclick="showStratDoc();return false;">Strat Doc ↗</a>
+        <span class="project-arrow" style="opacity:.15;">↗</span>
+      </div>
+    </div>
+
+    <!-- Project 03 -->
+    <div class="project-card active reveal">
+      <div class="project-num">03</div>
+      <div class="project-meta">
+        <div class="project-tags"><span class="project-tag live">Live</span><span class="project-tag">AI Consumer</span><span class="project-tag">Interactive Tool</span></div>
+        <h3 class="project-title">The AI Relationship Gap</h3>
+        <p class="project-desc">A six-question diagnostic that maps where someone sits across five stages of AI adoption — from Avoider to Intentional User. Identifies whether the gap is avoidance or over-reliance, and delivers a personalised intervention for each. Built on research across McKinsey, Deloitte, Twilio, and a 2025 cognitive offloading study (r = −0.68). The two failure modes nobody talks about — holding back and losing agency — diagnosed in under 2 minutes.</p>
+      </div>
+      <div class="project-status">
+        <a class="status-badge" href="#" onclick="showAIGap();return false;">Live ↗</a>
+        <span class="project-arrow" style="opacity:.15;">↗</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-title">Let's talk<br>about the<br><em>gap.</em></h2>
+      <p class="contact-sub">I'm actively looking for Summer 2026 product marketing internships, particularly at companies building technology that people are still figuring out how to trust.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="https://linkedin.com/in/deepalikola" target="_blank">
+        <div><p class="contact-link-label">LinkedIn</p><p class="contact-link-value">linkedin.com/in/deepalikola</p></div>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="/cdn-cgi/l/email-protection#046061617465686d2a6f6b6865446369656d682a676b69">
+        <div><p class="contact-link-label">Email</p><p class="contact-link-value"><span class="__cf_email__" data-cfemail="284c4d4d584944410643474449684f45494144064b4745">[email&#160;protected]</span></p></div>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="https://deepali-activation-gap.tiiny.site/" target="_blank">
+        <div><p class="contact-link-label">Project 1 — Live Tool</p><p class="contact-link-value">Closing the Activation Gap ↗</p></div>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="https://gridgap.vercel.app/" target="_blank">
+        <div><p class="contact-link-label">Project 2 — Live Tool</p><p class="contact-link-value">GridGap — Energy Adoption Diagnostic ↗</p></div>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="#" onclick="showAIGap();return false;">
+        <div><p class="contact-link-label">Project 3 — Live Tool</p><p class="contact-link-value">The AI Relationship Gap ↗</p></div>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Deepali Kola</p>
+  <p>W.P. Carey School of Business, ASU · Graduating May 2026</p>
+</footer>
+</div><!-- /main-site -->
+
+
+<!-- ════════════════════ STRATEGY DOC PAGE ════════════════════ -->
+<div id="strat-doc-page" style="display:none; padding-top:80px;">
+<div style="padding:80px 60px; max-width:1200px; margin:0 auto;">
+
+  <a class="doc-back" onclick="showMain();return false;">← Back to Portfolio</a>
+
+  <div class="doc-header">
+    <p class="doc-kicker">GridGap · Product Marketing Strategy · v2.0</p>
+    <h1 class="doc-title">Residential Energy<br>Adoption Diagnostic</h1>
+    <p class="doc-meta">Deepali Kola · W.P. Carey School of Business, ASU · March 2026</p>
+  </div>
+
+  <p class="doc-intro">The U.S. grid runs at 53% capacity. 61% of homeowners say electricity costs too much. Only 22% of smart thermostat owners are enrolled in demand response. This document explains exactly how GridGap closes that gap.</p>
+
+  <div class="doc-toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><span class="toc-num">1</span><a href="#doc-s1">New Diagnostic Flow</a></li>
+      <li><span class="toc-num">2</span><a href="#doc-s2">Behavioral Segmentation Model</a></li>
+      <li><span class="toc-num">3</span><a href="#doc-s3">Decision Engine Logic</a></li>
+      <li><span class="toc-num">4</span><a href="#doc-s4">Result Page Design</a></li>
+      <li><span class="toc-num">5</span><a href="#doc-s5">Activation Strategy</a></li>
+      <li><span class="toc-num">6</span><a href="#doc-s6">Product Wedge Mapping</a></li>
+      <li><span class="toc-num">7</span><a href="#doc-s7">UX Improvements</a></li>
+      <li><span class="toc-num">8</span><a href="#doc-s8">Future Product Extensions</a></li>
+      <li><span class="toc-num">9</span><a href="#doc-s9">Homeowner Interview Synthesis</a></li>
+      <li><span class="toc-num">10</span><a href="#doc-s10">Tesla Energy Message Architecture</a></li>
+      <li><span class="toc-num">11</span><a href="#doc-s11">Full Funnel: Awareness → Quote → Install</a></li>
+      <li><span class="toc-num">12</span><a href="#doc-s12">Conversion Lift Hypothesis</a></li>
+    </ol>
+  </div>
+
+  <!-- S1 -->
+  <div class="doc-section" id="doc-s1">
+    <div class="doc-section-num">01</div>
+    <h2 class="doc-section-title">New Diagnostic Flow</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>The redesigned flow captures five key variables in five questions. Maximum time-to-result: 90 seconds. No email gate before receiving the diagnosis. Q1 gates the option set for all subsequent questions.</p><p><strong>Design principle:</strong> The tool does the reasoning. The user confirms one variable per question. Minimum input, maximum perceived personalization.</p></div>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Q</th><th>Answer Option</th><th>What It Captures</th><th>Why It Matters</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Q1: Housing</strong></td><td>Homeowner — single-family</td><td>Full property control</td><td>Unlocks full option set</td></tr>
+        <tr><td></td><td>Homeowner — condo/HOA</td><td>HOA may restrict installs</td><td>Narrows to permit-compliant products</td></tr>
+        <tr><td></td><td>Renter</td><td>No ownership; community solar only</td><td>Routes to community solar + DR only</td></tr>
+        <tr><td></td><td>Homeowner — selling within 3 yrs</td><td>Short payback window</td><td>Shifts to monthly savings framing</td></tr>
+        <tr><td><strong>Q2: Current Tech</strong></td><td>Solar panels</td><td>Existing generation asset</td><td>Determines upgrade path</td></tr>
+        <tr><td></td><td>Home battery (Powerwall/Enphase)</td><td>Storage present — VPP-ready</td><td>Terminal path — VPP congratulations</td></tr>
+        <tr><td></td><td>Smart thermostat</td><td>Immediate DR wedge available</td><td>$0, 10-min action available today</td></tr>
+        <tr><td></td><td>Electric vehicle</td><td>TOU rate mismatch likely</td><td>Night-charging + rate optimization CTA</td></tr>
+        <tr><td></td><td>None of the above</td><td>Clean slate</td><td>Start with lowest-friction first step</td></tr>
+        <tr><td><strong>Q3: Monthly Bill</strong></td><td>Under $100</td><td>Low bill pain</td><td>Lead with values + resilience</td></tr>
+        <tr><td></td><td>$100–$200</td><td>Moderate economics</td><td>Balanced economic + values messaging</td></tr>
+        <tr><td></td><td>$200–$300</td><td>Solid ROI case</td><td>Standard payback math works</td></tr>
+        <tr><td></td><td>Over $300</td><td>High bill pain</td><td>Lead with $X saved before anything else</td></tr>
+        <tr><td></td><td>Included in rent/HOA</td><td>Utility costs abstracted</td><td>Skip bill math; use subscriber model</td></tr>
+        <tr><td><strong>Q4: State/Region</strong></td><td>California</td><td>NEM 3.0 + SGIP + PSPS</td><td>Battery now required for solar ROI</td></tr>
+        <tr><td></td><td>Texas</td><td>ERCOT; Uri outage trauma</td><td>Resilience is primary sell</td></tr>
+        <tr><td></td><td>Arizona</td><td>SRP/APS rate plan constraint</td><td>Must disclose SRP battery payback constraint</td></tr>
+        <tr><td></td><td>Florida/Gulf Coast</td><td>Hurricane outage risk</td><td>Islanding capability is primary value prop</td></tr>
+        <tr><td></td><td>Northeast (NY/MA/CT/NJ)</td><td>NYSERDA + Green Mountain VPP</td><td>Strong VPP programs; grid participation lead</td></tr>
+        <tr><td></td><td>Other U.S.</td><td>DSIRE national lookup</td><td>Route to DSIRE for local incentives</td></tr>
+        <tr><td><strong>Q5: Decision Stage</strong></td><td>Don't know what's available</td><td>Stage 1: Awareness Gap</td><td>Route to self-relevance + DSIRE proof</td></tr>
+        <tr><td></td><td>Researched but don't trust numbers</td><td>Stage 2: Economics Skepticism</td><td>Route to savings estimator + LBNL data</td></tr>
+        <tr><td></td><td>Know it makes sense but can't start</td><td>Stage 3: Commitment Friction</td><td>Route to 3-step sequenced path + DR enrollment</td></tr>
+        <tr><td></td><td>Waiting for tech to improve</td><td>Stage 3b: Decision Deferral</td><td>Show waiting cost: ITC at 30% now vs. declining</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- S2 -->
+  <div class="doc-section" id="doc-s2">
+    <div class="doc-section-num">02</div>
+    <h2 class="doc-section-title">Behavioral Segmentation Model</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>The model operates as five stacked diagnostic layers. Each layer narrows the recommendation space. The final output is the intersection of all five — not a single-axis segment label.</p></div>
+    <p class="doc-subsection">The Five Layers</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Layer</th><th>Variable Captured</th><th>How It Gates Output</th><th>Interaction Effect</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Housing Control</strong></td><td>Ownership type + tenure</td><td>Removes products user cannot install</td><td>Renter + high bill = community solar only</td></tr>
+        <tr><td><strong>2. Technology Stack</strong></td><td>Existing devices</td><td>Determines wedge product and upgrade path</td><td>Solar + no battery + CA = Powerwall primary</td></tr>
+        <tr><td><strong>3. Bill Pain</strong></td><td>Monthly spend</td><td>Sets message register (ROI vs. values)</td><td>High bill + Stage 2 = estimator with local rate data mandatory</td></tr>
+        <tr><td><strong>4. Geographic Context</strong></td><td>State/utility market</td><td>Gates program availability + rate plans</td><td>AZ + battery = must disclose SRP payback constraint</td></tr>
+        <tr><td><strong>5. Psychological Stage</strong></td><td>Decision readiness</td><td>Determines intervention type</td><td>Stage 3 + renter = 3-step path collapses to 2 steps</td></tr>
+      </tbody>
+    </table></div>
+    <p class="doc-subsection">Example User Profiles</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Profile</th><th>Housing</th><th>Tech Stack</th><th>Bill</th><th>State</th><th>Stage</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Maria, 42</strong></td><td>Homeowner SF</td><td>Solar only</td><td>$280/mo</td><td>California</td><td>2</td></tr>
+        <tr><td><strong>Dev, 35</strong></td><td>Homeowner SF</td><td>Solar + battery</td><td>$310/mo</td><td>Northeast</td><td>1</td></tr>
+        <tr><td><strong>James, 51</strong></td><td>Renter</td><td>Smart thermostat</td><td>Incl. in rent</td><td>Texas</td><td>1</td></tr>
+        <tr><td><strong>Lin, 29</strong></td><td>Homeowner SF</td><td>EV + thermostat</td><td>$195/mo</td><td>Arizona</td><td>3</td></tr>
+        <tr><td><strong>Rosa, 47</strong></td><td>Condo/HOA</td><td>None</td><td>$155/mo</td><td>Florida</td><td>2</td></tr>
+        <tr><td><strong>Tom, 63</strong></td><td>Homeowner SF</td><td>None</td><td>$390/mo</td><td>Texas</td><td>3b</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- S3 -->
+  <div class="doc-section" id="doc-s3">
+    <div class="doc-section-num">03</div>
+    <h2 class="doc-section-title">Decision Engine Logic</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>The engine evaluates answers in waterfall order: housing control first (hardest gate), then technology stack, bill pain, geography, then psychological stage. The first hard gate eliminates ineligible products entirely.</p></div>
+    <p class="doc-subsection">Core Logic Rules</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Condition</th><th>Hard Gate?</th><th>Output Effect</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Renter or HOA</strong></td><td>Yes — removes battery + solar</td><td>Community solar + DR pathway only</td></tr>
+        <tr><td><strong>Solar + battery installed</strong></td><td>Yes — skip all stages</td><td>VPP enrollment path. No further segmentation.</td></tr>
+        <tr><td><strong>California + solar, no battery</strong></td><td>Soft gate on export ROI</td><td>NEM 3.0 context required. Powerwall primary CTA.</td></tr>
+        <tr><td><strong>Arizona + any battery or solar</strong></td><td>Disclosure gate</td><td>Must show SRP rate plan payback constraint prominently.</td></tr>
+        <tr><td><strong>FL or TX + resilience motivation</strong></td><td>Climate alert</td><td>Show local outage data before CTA.</td></tr>
+        <tr><td><strong>EV in household</strong></td><td>TOU optimization</td><td>Night-charging mismatch framing + rate plan switch CTA.</td></tr>
+        <tr><td><strong>Smart thermostat, no solar</strong></td><td>Immediate action available</td><td>DR enrollment CTA: $0, 10 minutes, unenrollable anytime.</td></tr>
+        <tr><td><strong>Stage 3b (deferral)</strong></td><td>Waiting cost trigger</td><td>Show ITC timeline + solar cost plateau chart (LBNL 2023).</td></tr>
+      </tbody>
+    </table></div>
+    <p class="doc-subsection">Eight Profile Decision Paths</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>#</th><th>Profile</th><th>Condition Stack</th><th>Recommended Path</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Maria — CA</td><td>Homeowner + solar + no battery + CA + Stage 2</td><td>NEM 3.0 alert first. Savings estimator with CPUC rate data. Primary CTA: Powerwall quote.</td></tr>
+        <tr><td><strong>2</strong></td><td>Dev — NE</td><td>Homeowner + solar + battery + NE + any stage</td><td>VPP congratulations path. CTA: Green Mountain Power VPP enrollment.</td></tr>
+        <tr><td><strong>3</strong></td><td>James — TX</td><td>Renter + thermostat + utilities included + TX + Stage 1</td><td>No install path. DR enrollment today ($0, override rights). Community solar lookup.</td></tr>
+        <tr><td><strong>4</strong></td><td>Lin — AZ</td><td>Homeowner + EV + thermostat + AZ + Stage 3</td><td>TOU rate switch CTA. DR enrollment as Step 1. NREL PVWatts. SRP rate plan disclosure.</td></tr>
+        <tr><td><strong>5</strong></td><td>Rosa — FL</td><td>HOA/condo + no tech + FL + moderate bill + Stage 2</td><td>HOA constraint acknowledged. Hurricane outage data. Portable battery + community solar CTA.</td></tr>
+        <tr><td><strong>6</strong></td><td>Tom — TX</td><td>Homeowner + no tech + TX + high bill + Stage 3b</td><td>Waiting cost table: ITC at 30% now. Solar cost plateau since 2022. One installer quote + DSIRE.</td></tr>
+        <tr><td><strong>7</strong></td><td>Priya — CA</td><td>Homeowner + thermostat + CA + low bill + Stage 1</td><td>Awareness path. DR enrollment as immediate action. SGIP rebate link. DSIRE.</td></tr>
+        <tr><td><strong>8</strong></td><td>Kevin — NE</td><td>Renter + EV + NE + moderate bill + Stage 3</td><td>3 steps: (1) DR enrollment, (2) community solar subscription, (3) TOU rate plan with landlord guide.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- S4 -->
+  <div class="doc-section" id="doc-s4">
+    <div class="doc-section-num">04</div>
+    <h2 class="doc-section-title">Result Page Design</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>The result page is the tool's primary conversion surface. Its job is to make the user feel understood, reduce decision anxiety, and route them to one primary action. Three psychological principles govern the design: <strong>competence, control, and confidence.</strong></p></div>
+    <p class="doc-subsection">Result Page Structure</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Block</th><th>Content and Design Rationale</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Stage Tag</strong></td><td>Labeled badge (e.g., 'Stage 2 — Economics Skepticism'). Orange or green by severity. Validates the user's position without judgment.</td></tr>
+        <tr><td><strong>Headline</strong></td><td>Assembled dynamically from housing + motivation + tech stack. Example: 'Your solar panels are exporting power at the wrong time. Here is what NEM 3.0 means for you.'</td></tr>
+        <tr><td><strong>Energy Profile</strong></td><td>3-cell grid: State/Market, Technology Stack, Bill Level. Acts as a mirror — user sees their situation reflected back accurately.</td></tr>
+        <tr><td><strong>Insight Block</strong></td><td>One key fact specific to their situation. Sourced from LBNL, CPUC, FERC, or EIA. Not a sales claim — a data point that reframes the decision.</td></tr>
+        <tr><td><strong>Climate/Outage Alert</strong></td><td>Shown only for FL/TX/CA users with resilience motivation. Shows local outage duration data.</td></tr>
+        <tr><td><strong>Savings Estimator</strong></td><td>Stage 2 only. Single slider (monthly bill). Output: annual savings range, payback years, 30% ITC applied. Methodology expandable on demand.</td></tr>
+        <tr><td><strong>Primary Recommendation</strong></td><td>Action box: dark background, large headline, single CTA button. Only one CTA. No competing links in this block.</td></tr>
+        <tr><td><strong>Secondary Options</strong></td><td>Two to three additional actions listed below the primary block. Lower visual weight.</td></tr>
+        <tr><td><strong>What's Blocking You</strong></td><td>Four-option micro-question: cost/complexity/relevance/partner buy-in. Each reveals a one-paragraph reframe without leaving the page.</td></tr>
+        <tr><td><strong>Share/Save</strong></td><td>Copy summary to clipboard. Open in email (pre-filled subject + body). Not shown until after the primary CTA zone.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="doc-callout"><strong>The tool does not say what to do.</strong> It shows the user what is true about their situation, and lets the action follow logically from that.</div>
+    <p class="doc-subsection">Emotional Design Principles</p>
+    <div class="doc-body">
+      <p><strong>Understood:</strong> The headline uses their specific tech stack and location — 'your solar panels' and 'your market,' not 'homeowners in your situation.'</p>
+      <p><strong>Confident:</strong> Every stat is cited (LBNL, FERC, CPUC, Brattle Group). Methodology available on demand. Range outputs, not false precision.</p>
+      <p><strong>In control:</strong> DR enrollment is labeled 'unenrollable anytime, override rights required.' Stage 3 friction is addressed directly before asking the user to act.</p>
+      <p><strong>Not sold to:</strong> No email collection before showing results. Lead capture is optional and appears after the recommendation — not before.</p>
+    </div>
+  </div>
+
+  <!-- S5 -->
+  <div class="doc-section" id="doc-s5">
+    <div class="doc-section-num">05</div>
+    <h2 class="doc-section-title">Activation Strategy</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>Each stage requires a different conversion mechanism. The failure mode of a single-tone approach: Stage 1 users get overwhelmed by economics they are not ready to process, and Stage 2 users get told to 'just get a quote' before their skepticism has been addressed.</p></div>
+    <p class="doc-subsection">Stage Conversion Matrix</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Stage</th><th>Tone</th><th>Proof Points</th><th>Product Wedge</th><th>Activation Assets</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Stage 1 — Awareness Gap</strong></td><td>Informative. Non-urgent. Self-relevance first.</td><td>FERC: 50M eligible, &lt;6M enrolled. Parks: 61% say bills too high.</td><td>Smart thermostat DR enrollment ($0, 10 min).</td><td>DSIRE lookup. PVWatts link. Community solar finder.</td></tr>
+        <tr><td><strong>Stage 2 — Economics Skepticism</strong></td><td>Precise. Third-party validated. Acknowledges distrust.</td><td>LBNL Tracking the Sun 2023. NREL PVWatts. Local EIA rate. 30% ITC explicitly shown.</td><td>Savings estimator (no vendor, no contact info).</td><td>NREL calculator link. ITC expiration timeline. Payback range with methodology toggle.</td></tr>
+        <tr><td><strong>Stage 3a — Commitment Friction</strong></td><td>Empathetic. Control-forward. Sequenced.</td><td>DR programs require override rights by FERC rule.</td><td>DR enrollment as Step 1. Then NREL calc. Then one quote.</td><td>3-step path. 'One action this week' framing.</td></tr>
+        <tr><td><strong>Stage 3b — Decision Deferral</strong></td><td>Urgent but not pressuring. Cost-of-waiting frame.</td><td>ITC: 30% now, tapering post-2032. Solar costs plateaued since 2022 (LBNL).</td><td>Waiting cost comparison table.</td><td>3-row table (tech cost, ITC, utility rebates).</td></tr>
+      </tbody>
+    </table></div>
+    <div class="doc-callout"><strong>Stage 2 → Stage 3 conversion driver:</strong> the savings estimator, not the CTA button. The button is the confirmation. The estimator is the decision.</div>
+  </div>
+
+  <!-- S6 -->
+  <div class="doc-section" id="doc-s6">
+    <div class="doc-section-num">06</div>
+    <h2 class="doc-section-title">Product Wedge Mapping</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>A product wedge is the lowest-friction first action that puts a user on the adoption path. The wedge must be <strong>reversible, low-cost (ideally $0), and immediately demonstrable.</strong></p></div>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>User Segment</th><th>Best Wedge</th><th>Why This Wedge</th><th>Full Path</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Solar, no battery</strong></td><td>Powerwall storage quote</td><td>Export economics changed under NEM 3.0. Without battery, solar owner is selling cheap and buying expensive.</td><td>Solar → Powerwall → TOU optimization → VPP enrollment</td></tr>
+        <tr><td><strong>EV owner, no solar</strong></td><td>TOU rate plan switch</td><td>EV owners on flat-rate plans are overpaying for night charging. TOU switch is a utility form — not an install — and can save $300–600/yr immediately.</td><td>TOU switch → smart charger → solar → battery</td></tr>
+        <tr><td><strong>Smart thermostat, no solar</strong></td><td>Demand response enrollment</td><td>DR enrollment is $0, 10 minutes, and explicitly unenrollable. Creates utility relationship and VPP identity before any hardware conversation.</td><td>DR enrollment → Powerwall → solar → VPP</td></tr>
+        <tr><td><strong>Renter</strong></td><td>Community solar subscription</td><td>Renters cannot install hardware. Community solar gives them a real stake in clean energy economics with no barrier to entry.</td><td>Community solar → DR enrollment → advocate for building upgrade</td></tr>
+        <tr><td><strong>High outage risk (FL/TX/CA)</strong></td><td>Backup battery quote</td><td>Islanding capability is a safety argument, not an economic one. High willingness to pay after outage events.</td><td>Backup battery → solar → TOU → VPP</td></tr>
+        <tr><td><strong>Nothing installed, high bill</strong></td><td>NREL PVWatts calculation</td><td>Bill pain present but no trust in vendor quotes. Third-party calculator with no contact form is the trust-building wedge.</td><td>PVWatts self-calc → one installer quote → install → DR</td></tr>
+        <tr><td><strong>HOA / condo</strong></td><td>Portable battery + community solar</td><td>HOA residents cannot install rooftop solar or wall-mounted batteries. Portable backup power is HOA-compliant and immediately available.</td><td>Portable battery → community solar → advocate for building solar</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- S7 -->
+  <div class="doc-section" id="doc-s7">
+    <div class="doc-section-num">07</div>
+    <h2 class="doc-section-title">UX Improvements</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>The v1 tool correctly identifies psychological stages and routes to relevant actions. The v2 redesign addresses five specific UX failure modes identified in the existing implementation.</p></div>
+    <p class="doc-subsection">7.1 — Decision Framing</p>
+    <div class="doc-body"><p><strong>Problem:</strong> Options presented as neutral choices. Users without energy knowledge cannot evaluate them.<br><strong>Fix:</strong> Each option includes a one-line consequence note in gray text. Example: 'Homeowner — condo/HOA → some products may require board approval.' Consequence appears before selection, not after.</p></div>
+    <p class="doc-subsection">7.2 — Progress Cues</p>
+    <div class="doc-body"><p><strong>Problem:</strong> Progress bar shows question number but not estimated time or what is coming.<br><strong>Fix:</strong> Add '2 min left' countdown. Add micro-label above each question: 'This tells us your upgrade path.' Users should understand what their answer does, not just that they answered.</p></div>
+    <p class="doc-subsection">7.3 — Results Page Hierarchy</p>
+    <div class="doc-body"><p><strong>Problem:</strong> v1 results are flat — all information at the same visual weight.<br><strong>Fix:</strong> Three-zone hierarchy: (1) Mirror zone — situation reflected back. (2) Insight zone — one sourced key fact. (3) Action zone — one primary CTA, dark background, full width.</p></div>
+    <p class="doc-subsection">7.4 — Social Sharing</p>
+    <div class="doc-body"><p><strong>Problem:</strong> No sharing mechanism. The diagnostic produces insight users want to share with a partner.<br><strong>Fix:</strong> (a) Copy summary — one paragraph with stage, housing, location, and primary recommendation. (b) Open in email — pre-filled subject 'Our energy situation — worth 2 minutes.'</p></div>
+    <p class="doc-subsection">7.5 — Partner Decision Support</p>
+    <div class="doc-body"><p><strong>Problem:</strong> Energy decisions are household decisions. The tool addresses one person.<br><strong>Fix:</strong> After the primary CTA, add 'Share this with your household.' Pre-fills an email with the diagnosis and a single question: 'Does this match how you see our situation?'</p></div>
+    <p class="doc-subsection">7.6 — No Lead Capture Before Value</p>
+    <div class="doc-body"><p>Email gate before results eliminates 40–60% of users before they see any value (HubSpot 2023). <strong>v2 principle:</strong> show the full diagnosis, then offer an optional save/email feature. Lead capture belongs after the savings estimator — not at the door.</p></div>
+  </div>
+
+  <!-- S8 -->
+  <div class="doc-section" id="doc-s8">
+    <div class="doc-section-num">08</div>
+    <h2 class="doc-section-title">Future Product Extensions</h2>
+    <div class="doc-section-rule"></div>
+    <p class="doc-subsection">8.1 — Real Energy Advisory Platform</p>
+    <div class="doc-body"><p>Connect to EIA Green Button data (with user consent) to replace self-reported bill amount with actual consumption data. Add zip-code-level program lookup (DSIRE API, EnergySage API) so incentive availability is pulled in real time. Re-engagement layer: 'Your electricity rate just changed. Here is what that means for your payback calculation.' Sell into utility portals (APS, SRP, SDGE) as a white-label energy advisor. Revenue model: per-enrolled-customer DR bounty + premium advisory tier.</p></div>
+    <p class="doc-subsection">8.2 — Lead Generation Funnel</p>
+    <div class="doc-body"><p>Stage 2 users who complete the savings estimator are the highest-intent leads in the funnel. Optional email capture at this point converts at 2–4x the rate of pre-result gates. CRM segmentation by diagnostic output: homeowner + CA + solar + no battery = Powerwall lead. Each segment gets a different nurture sequence. Partner API: feed qualified leads (with consent) to Tesla Energy, Sunrun, Mosaic, or local installer network.</p></div>
+    <p class="doc-subsection">8.3 — VPP Enrollment Pipeline</p>
+    <div class="doc-body"><p>Every user with solar + battery installed is VPP-eligible today. In production, this path connects directly to the Tesla Energy Plan API (CA) or Green Mountain Power (NE) for in-tool enrollment. DR enrollment (smart thermostat path) can be completed in-tool via utility API. Target: Nest + Ecobee integration to handle enrollment without redirect. VPP identity layer: 'You provided 3 hours of backup to your neighborhood last summer.' This transforms an economic transaction into community identity — the highest-retention mechanism available.</p></div>
+  </div>
+
+  <!-- S9 -->
+  <div class="doc-section" id="doc-s9">
+    <div class="doc-section-num">09</div>
+    <h2 class="doc-section-title">Homeowner Interview Synthesis</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>12 in-depth interviews with homeowners and renters across 5 U.S. markets. Semi-structured, 45–60 minutes, conducted via Zoom. Recruited via Nextdoor, HomeAdvisor, and a university research panel. All names are pseudonyms.</p></div>
+    <p class="doc-subsection">Participant Overview</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>ID</th><th>State</th><th>Housing</th><th>Tech Stack</th><th>Stage</th></tr></thead>
+      <tbody>
+        <tr><td>P01</td><td>CA</td><td>Homeowner SF</td><td>Solar only</td><td>Stage 2</td></tr>
+        <tr><td>P02</td><td>TX</td><td>Homeowner SF</td><td>Nothing</td><td>Stage 1</td></tr>
+        <tr><td>P03</td><td>AZ</td><td>Homeowner SF</td><td>Smart thermostat</td><td>Stage 3</td></tr>
+        <tr><td>P04</td><td>FL</td><td>Condo/HOA</td><td>Nothing</td><td>Stage 2</td></tr>
+        <tr><td>P05</td><td>NE</td><td>Homeowner SF</td><td>Solar + battery</td><td>Stage 1</td></tr>
+        <tr><td>P06</td><td>CA</td><td>Renter</td><td>Smart thermostat + EV</td><td>Stage 3</td></tr>
+        <tr><td>P07</td><td>TX</td><td>Homeowner SF</td><td>EV</td><td>Stage 3b</td></tr>
+        <tr><td>P08</td><td>NE</td><td>Renter</td><td>Nothing</td><td>Stage 1</td></tr>
+        <tr><td>P09</td><td>CA</td><td>Homeowner SF</td><td>Solar + battery</td><td>VPP enrolled</td></tr>
+        <tr><td>P10</td><td>AZ</td><td>Homeowner SF</td><td>Solar only</td><td>Stage 3b</td></tr>
+        <tr><td>P11</td><td>FL</td><td>Homeowner SF</td><td>Nothing</td><td>Stage 3</td></tr>
+        <tr><td>P12</td><td>TX</td><td>Homeowner SF</td><td>Nothing</td><td>Stage 2</td></tr>
+      </tbody>
+    </table></div>
+    <p class="doc-subsection">Key Finding Themes</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Theme</th><th>n (of 12)</th><th>Synthesis and Diagnostic Implication</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Vendor quote distrust</strong></td><td>9 of 12</td><td>Described quotes as 'confusing,' 'pushy,' or 'impossible to compare.' 8 of 9 said they would trust NREL PVWatts more than a vendor estimate. Implication: savings estimator must be framed as third-party and must not ask for contact info.</td></tr>
+        <tr><td><strong>Bill pain motivating but not sufficient</strong></td><td>10 of 12</td><td>All 10 high-bill participants said electricity costs were a major frustration. None had taken action beyond searching online. Implication: Stage 1 output must name a specific first action, not describe options.</td></tr>
+        <tr><td><strong>Partner buy-in is primary Stage 3 blocker</strong></td><td>7 of 12</td><td>7 participants cited a spouse or co-owner as the reason a decision had stalled. In 5 cases, one partner had done extensive research and the other had not. Implication: the share feature is the Stage 3 unlock.</td></tr>
+        <tr><td><strong>NEM 3.0 confusion in CA</strong></td><td>4 of 4 CA</td><td>All 4 CA participants with solar had heard of NEM 3.0 but none could describe its economic impact correctly. Implication: the NEM 3.0 alert must be factual, not alarmist, and use correct framing.</td></tr>
+        <tr><td><strong>DR program unawareness</strong></td><td>11 of 12</td><td>11 of 12 had never heard of demand response by name. When described in plain language, 9 said they would enroll immediately. Implication: Stage 1 DR copy must explain the product first.</td></tr>
+        <tr><td><strong>AZ rate plan awareness</strong></td><td>3 of 3 AZ</td><td>All 3 AZ participants with solar were on SRP E-27 and had not modeled battery payback under that rate structure. One was underwater on her system. Implication: the AZ disclosure must appear before any battery CTA.</td></tr>
+        <tr><td><strong>Outage fear is fastest path to a quote (FL/TX)</strong></td><td>5 of 5 FL/TX</td><td>All 5 FL and TX participants mentioned a specific outage event (Ian, Uri, or local storm) as emotionally salient. Implication: the climate alert must lead with the specific event, not a generic statistic.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="doc-subsection">Representative Quotes</p>
+    <div class="doc-quote">"I got a quote for a Powerwall and it said the payback was 11 years. But that was before NEM 3. Now I have no idea if the math still works and nobody has explained it to me."<cite>— P01, California</cite></div>
+    <div class="doc-quote">"I looked into solar after Uri. Then I got busy. Then I figured I'd wait until the panels got cheaper. That was three years ago."<cite>— P07, Texas</cite></div>
+    <div class="doc-quote">"My husband wants to do it but I'm not ready to commit $30,000 to something I don't fully understand yet. I don't know who to trust."<cite>— P03, Arizona</cite></div>
+    <div class="doc-quote">"After Ian, I had no power for six days. Six days. If you told me I could have islanded from the grid for $12,000, I would have written the check that morning."<cite>— P11, Florida</cite></div>
+    <div class="doc-quote">"Once I was enrolled in the Tesla Energy Plan I started paying attention to grid events. I feel like I'm actually part of something. That's not why I bought it, but it's why I tell people about it."<cite>— P09, California (VPP enrolled)</cite></div>
+  </div>
+
+  <!-- S10 -->
+  <div class="doc-section" id="doc-s10">
+    <div class="doc-section-num">10</div>
+    <h2 class="doc-section-title">Tesla Energy Message Architecture</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>This section defines the message architecture for a hypothetical Tesla Energy deployment of GridGap. Message architecture is not copy — it is the strategic hierarchy that determines what is said, in what order, to whom, and why.</p></div>
+    <p class="doc-subsection">Brand Voice Principles</p>
+    <div class="doc-body">
+      <p><strong>Precise, not reassuring.</strong> Tesla Energy does not tell customers 'you're doing great.' It tells them what the data says.</p>
+      <p><strong>Advisor, not salesperson.</strong> No urgency language. No 'limited time.' No 'act now before prices rise.'</p>
+      <p><strong>Every claim is sourced or sourceable.</strong> The architecture assumes a skeptical, research-oriented audience who will verify statistics.</p>
+      <p><strong>Control language is mandatory for DR and VPP.</strong> 'You can unenroll anytime' and 'your override is always available' must appear before any enrollment CTA.</p>
+    </div>
+    <p class="doc-subsection">Message Hierarchy by Stage</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Stage</th><th>Primary Message</th><th>Reframe Message</th><th>CTA Message</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Stage 1</strong></td><td>61% of homeowners say electricity costs too much. Only 22% with smart thermostats are enrolled in programs that reduce those costs.</td><td>You may be eligible for programs that require no new hardware, no upfront cost, and no long-term commitment.</td><td>See what is available to you — takes 90 seconds.</td></tr>
+        <tr><td><strong>Stage 2</strong></td><td>The solar quotes you have seen may not reflect your actual savings. The key variables are all calculable.</td><td>NREL's PVWatts calculator uses satellite data for your specific address. These are inputs you can verify.</td><td>Run the numbers for your home — no contact information required.</td></tr>
+        <tr><td><strong>Stage 3a</strong></td><td>The complexity of a solar + storage decision is real. But it is in the decision process, not in the technology or the operation.</td><td>Start with the step that requires the least commitment: demand response enrollment. Free, 10 minutes, unenroll anytime.</td><td>Start with one step this week.</td></tr>
+        <tr><td><strong>Stage 3b</strong></td><td>Solar panel costs have not declined meaningfully since 2022. The federal tax credit is at its highest level now and tapers after 2032.</td><td>The cost of waiting is not theoretical. Each year of delay at a $300/month bill and 30% ITC is approximately $1,100 in forgone tax credit value.</td><td>See your waiting cost — enter your monthly bill.</td></tr>
+        <tr><td><strong>VPP Path</strong></td><td>Your home is already part of the solution. Solar + storage systems enrolled in VPPs provided X GWh of grid relief in 2023.</td><td>When demand spikes — during a heat wave, a storm, a cold snap — your battery can provide power to the grid. Tesla Energy Plan pays $2 per kWh during grid events.</td><td>Enroll in the Tesla Energy Plan — takes 5 minutes.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="doc-subsection">What the Tool Never Says</p>
+    <div class="doc-body">
+      <p><strong>Never:</strong> 'Save up to X%' — range claims without methodology erode trust with Stage 2 audiences.</p>
+      <p><strong>Never:</strong> 'Join thousands of homeowners' — social proof without specificity reads as marketing, not evidence.</p>
+      <p><strong>Never:</strong> 'Limited time' or 'act before the incentive expires' — urgency language contradicts the advisor tone.</p>
+      <p><strong>Never:</strong> 'Our products' or 'Tesla recommends' in diagnostic output — the tool is an advisor, not a storefront.</p>
+      <p><strong>Never:</strong> Omit the AZ or NEM 3.0 disclosures to simplify output — a tool that tells users what they want to hear destroys trust when reality surfaces.</p>
+    </div>
+  </div>
+
+  <!-- S11 -->
+  <div class="doc-section" id="doc-s11">
+    <div class="doc-section-num">11</div>
+    <h2 class="doc-section-title">Full Funnel: Awareness → Quote → Install</h2>
+    <div class="doc-section-rule"></div>
+    <p class="doc-subsection">Funnel Stage Map</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Stage</th><th>Name</th><th>Entry Condition</th><th>Primary Action</th><th>Conv. Rate Target</th></tr></thead>
+      <tbody>
+        <tr><td><strong>0</strong></td><td>Awareness</td><td>User encounters tool via search, social, or partner site</td><td>Clicks into the diagnostic</td><td>—</td></tr>
+        <tr><td><strong>1</strong></td><td>Diagnostic Completion</td><td>Lands on intro screen</td><td>Completes all 5 questions</td><td>65–75%</td></tr>
+        <tr><td><strong>2</strong></td><td>Result Engagement</td><td>Sees diagnosis output</td><td>Reads result + interacts with estimator or blocker section</td><td>40–55%</td></tr>
+        <tr><td><strong>3</strong></td><td>Wedge Action</td><td>Has engaged with result</td><td>Takes wedge action (DR enrollment / NREL calc / community solar)</td><td>20–30%</td></tr>
+        <tr><td><strong>4</strong></td><td>Quote Request</td><td>Has taken wedge action or re-engaged via email</td><td>Requests installer quote or VPP enrollment</td><td>8–15%</td></tr>
+        <tr><td><strong>5</strong></td><td>Install / Enrollment</td><td>Has requested quote or initiated enrollment</td><td>Completed install or active program enrollment</td><td>20–35% of Stage 4</td></tr>
+      </tbody>
+    </table></div>
+    <p class="doc-subsection">Funnel Metrics Dashboard</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Metric</th><th>Benchmark</th><th>Target (Yr 1)</th><th>Measurement Method</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Diagnostic completion rate</strong></td><td>60–70% (Typeform avg)</td><td>68%</td><td>Sessions with Q5 answer / sessions with Q1 answer</td></tr>
+        <tr><td><strong>Savings estimator interaction rate</strong></td><td>N/A (new feature)</td><td>35%</td><td>Slider moves / Stage 2 results shown</td></tr>
+        <tr><td><strong>Wedge action click rate</strong></td><td>8–12% (typical tool CTA)</td><td>22%</td><td>Wedge CTA clicks / results shown</td></tr>
+        <tr><td><strong>Email capture rate (optional)</strong></td><td>15–25% (post-value gate)</td><td>20%</td><td>Emails captured / results shown</td></tr>
+        <tr><td><strong>Quote request rate</strong></td><td>3–5% (avg landing page)</td><td>10%</td><td>Quote form submissions / diagnostic completions</td></tr>
+        <tr><td><strong>DR enrollment rate (Stage 1)</strong></td><td>22% baseline (Parks)</td><td>40%</td><td>Confirmed DR enrollments / Stage 1 completions</td></tr>
+        <tr><td><strong>VPP enrollment rate (battery owners)</strong></td><td>&lt;4% of eligible (est.)</td><td>25%</td><td>VPP enrollments / solar+battery completions</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- S12 -->
+  <div class="doc-section" id="doc-s12">
+    <div class="doc-section-num">12</div>
+    <h2 class="doc-section-title">Conversion Lift Hypothesis</h2>
+    <div class="doc-section-rule"></div>
+    <div class="doc-body"><p>Five testable hypotheses about which message or design change would produce the largest lift in conversion rate at each funnel stage. Each is structured as a falsifiable claim with a proposed test design, primary metric, and expected effect size.</p></div>
+
+    <div class="hypothesis-grid">
+      <div class="hypothesis-card">
+        <p class="hypothesis-label">H1 · Savings Estimator Auto-Population</p>
+        <p class="hypothesis-claim">Auto-populating the savings estimator slider with the user's reported bill amount will increase estimator interaction rate by 25–40%.</p>
+        <div class="hypothesis-body">
+          <p><strong>Mechanism:</strong> Users presented with a pre-populated slider see a result immediately, creating curiosity that drives interaction rather than requiring instruction.</p>
+          <p><strong>Test design:</strong> A/B test. Control: slider at $150/month. Treatment: slider pre-populated with user's Q3 answer. Primary metric: slider interaction rate. Sample size: ~1,200 Stage 2 result views per variant.</p>
+          <p><strong>Expected lift:</strong> 30–40% increase in estimator interaction rate → 8–12% increase in quote request rate.</p>
+        </div>
+      </div>
+      <div class="hypothesis-card">
+        <p class="hypothesis-label">H2 · DR Enrollment Copy</p>
+        <p class="hypothesis-claim">Describing the DR program in plain language before using the term 'demand response' will increase DR enrollment CTA clicks by 35–50%.</p>
+        <div class="hypothesis-body">
+          <p><strong>Mechanism:</strong> 11 of 12 interview participants had never heard of demand response. The term creates a vocabulary barrier before the product value can be communicated.</p>
+          <p><strong>Test design:</strong> A/B test. Control: 'Enroll in Demand Response.' Treatment: plain-language description first, 'demand response' as label only. Sample size: ~800 Stage 1 result views per variant.</p>
+          <p><strong>Expected lift:</strong> 35–50% increase in CTA click rate. High confidence — 9 of 9 participants who received the plain-language description said they would enroll immediately.</p>
+        </div>
+      </div>
+      <div class="hypothesis-card">
+        <p class="hypothesis-label">H3 · Partner Share Feature at Stage 3</p>
+        <p class="hypothesis-claim">Adding a 'Share with your household' CTA with pre-filled email copy to the Stage 3 result page will increase 30-day quote request rate by 20–30%.</p>
+        <div class="hypothesis-body">
+          <p><strong>Mechanism:</strong> 7 of 12 Stage 3 participants cited partner buy-in as the primary blocker. The pre-filled email reduces the friction of composing an explanation from scratch.</p>
+          <p><strong>Test design:</strong> A/B test. Control: Stage 3 result page without share feature. Treatment: with 'Share with your household' CTA. Primary metric: 30-day quote request rate. Sample size: ~600 Stage 3 completions per variant.</p>
+        </div>
+      </div>
+      <div class="hypothesis-card">
+        <p class="hypothesis-label">H4 · NEM 3.0 Plain-Language Alert</p>
+        <p class="hypothesis-claim">Replacing the technical NEM 3.0 description with a one-sentence plain-language summary followed by rate data will increase time-on-page for CA solar owners by 40%+ and reduce bounce rate by 15–20%.</p>
+        <div class="hypothesis-body">
+          <p><strong>Mechanism:</strong> P01 rated the original NEM 3.0 alert as 'confusing' and skipped the block entirely. A user who skips the alert does not understand why battery is the primary recommendation — so the CTA appears unmotivated.</p>
+          <p><strong>Test design:</strong> A/B test targeting CA users who selected 'solar panels' in Q2. Sample size: ~400 CA solar owners per variant. Primary metric: time-on-page. Secondary metric: Powerwall CTA click rate.</p>
+        </div>
+      </div>
+      <div class="hypothesis-card">
+        <p class="hypothesis-label">H5 · Waiting Cost Table vs. Generic Deferral Message</p>
+        <p class="hypothesis-claim">Replacing the generic deferral message for Stage 3b users with a three-row waiting cost table will increase quote request rate by 40–60%.</p>
+        <div class="hypothesis-body">
+          <p><strong>Mechanism:</strong> Stage 3b users believe waiting is rational. A generic urgency message bounces off this frame. A cost-of-waiting calculation engages the same analytical process the user is already using to justify delay — but reverses its conclusion with specific numbers.</p>
+          <p><strong>Test design:</strong> A/B test targeting Stage 3b completions only. Control: text message. Treatment: three-row comparison table (tech cost, ITC, utility rebates — each with 'wait' in red and 'act now' in green). Sample size: ~500 Stage 3b completions per variant.</p>
+          <p><strong>Expected lift:</strong> 40–60% increase in quote request rate for Stage 3b segment.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="doc-subsection">Test Priority and Sequencing</p>
+    <div class="doc-table-wrap"><table>
+      <thead><tr><th>Priority</th><th>Hypothesis</th><th>Why First/Next</th><th>Implementation Complexity</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>H1 — Estimator auto-population</td><td>Highest funnel impact. Affects all Stage 2 users. One line of JS.</td><td>Low — 1 day</td></tr>
+        <tr><td><strong>2</strong></td><td>H2 — DR plain language</td><td>Second-highest funnel impact. Affects all Stage 1 users. Simple copy change.</td><td>Low — 1 day</td></tr>
+        <tr><td><strong>3</strong></td><td>H4 — NEM 3.0 plain language</td><td>High impact for CA market. Copy change only.</td><td>Low — 1 day</td></tr>
+        <tr><td><strong>4</strong></td><td>H5 — Waiting cost table</td><td>High impact for Stage 3b. Requires building comparison table UI.</td><td>Medium — 3–4 days</td></tr>
+        <tr><td><strong>5</strong></td><td>H3 — Partner share feature</td><td>Requires 30-day measurement window and email tracking infrastructure.</td><td>Medium-high</td></tr>
+      </tbody>
+    </table></div>
+    <div class="doc-callout"><strong>Combined expected lift on overall quote request rate: from 6% baseline to 10–12%</strong> — a 65–100% relative improvement. All hypotheses should be run as controlled A/B tests with pre-registered metrics before being used to inform product roadmap decisions.</div>
+  </div>
+
+  <!-- Doc footer -->
+  <div style="margin-top:80px; padding-top:32px; border-top:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+    <p style="font-size:12px; color:var(--soft);">Deepali Kola · W.P. Carey School of Business, ASU · March 2026</p>
+    <div style="display:flex; gap:24px;">
+      <a href="https://gridgap.vercel.app/" target="_blank" style="font-size:12px; color:var(--teal); text-decoration:none;">gridgap.vercel.app ↗</a>
+      <a onclick="showMain();return false;" style="font-size:12px; color:var(--soft); text-decoration:none; cursor:pointer;">← Back to Portfolio</a>
+    </div>
+  </div>
+
+</div>
+</div><!-- /strat-doc-page -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><!-- ════════════════════ AI RELATIONSHIP GAP PAGE ════════════════════ -->
+<div id="ai-gap-page" style="display:none; padding-top:80px;">
+  <div style="max-width:1200px; margin:0 auto; padding:40px 60px 20px;">
+    <a style="display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);text-decoration:none;cursor:pointer;transition:color .2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--soft)'" onclick="showMain();return false;">← Back to Portfolio</a>
+  </div>
+  <iframe id="ai-gap-frame" src="about:blank" style="width:100%;height:calc(100vh - 160px);border:none;display:block;"></iframe>
+</div>
+
+<script>
+  function showStratDoc() {
+    document.getElementById('main-site').style.display = 'none';
+    document.getElementById('strat-doc-page').style.display = 'none';
+    document.getElementById('ai-gap-page').style.display = 'none';
+    document.getElementById('strat-doc-page').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+  function showAIGap() {
+    document.getElementById('main-site').style.display = 'none';
+    document.getElementById('strat-doc-page').style.display = 'none';
+    document.getElementById('ai-gap-page').style.display = 'block';
+    // Load the tool into the iframe via blob URL from inline content
+    const frame = document.getElementById('ai-gap-frame');
+    if (frame.src === 'about:blank') {
+      frame.src = 'ai_relationship_gap_v3.html';
+    }
+    window.scrollTo(0, 0);
+  }
+  function showMain() {
+    document.getElementById('main-site').style.display = 'block';
+    document.getElementById('strat-doc-page').style.display = 'none';
+    document.getElementById('ai-gap-page').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(el => el.classList.add('js-reveal'));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry
