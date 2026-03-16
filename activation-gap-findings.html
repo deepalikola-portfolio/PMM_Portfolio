@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closing the Activation Gap — Research Findings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0E0E0E;
+    --mid: #3A3A3A;
+    --soft: #888888;
+    --rule: #E5E5E5;
+    --bg: #FAFAFA;
+    --white: #FFFFFF;
+    --accent: #0A0A0A;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 56px 48px 64px; }
+
+  /* NAV */
+  .nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+  .nav-logo { font-size: 13px; font-weight: 500; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+  .nav-back { font-size: 12px; color: var(--soft); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: color 0.18s; }
+  .nav-back:hover { color: var(--ink); }
+
+  /* HEADER */
+  .header { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+  .header-left {}
+  .eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); margin-bottom: 12px; font-weight: 400; }
+  .title { font-family: var(--serif); font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.1; color: var(--ink); letter-spacing: -0.02em; }
+  .title em { font-style: italic; }
+  .header-meta { text-align: right; }
+  .meta-line { font-size: 12px; color: var(--soft); line-height: 1.7; }
+
+  /* BIG STAT */
+  .big-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); margin-bottom: 48px; }
+  .big-stat { background: var(--white); padding: 28px 24px; }
+  .big-stat-num { font-family: var(--serif); font-size: 3rem; line-height: 1; color: var(--ink); letter-spacing: -0.03em; margin-bottom: 8px; }
+  .big-stat-label { font-size: 13px; color: var(--mid); line-height: 1.5; font-weight: 300; }
+  .big-stat-source { font-size: 11px; color: var(--soft); margin-top: 6px; letter-spacing: 0.02em; }
+
+  /* INSIGHT BAR */
+  .insight-bar { background: var(--ink); color: var(--white); padding: 20px 28px; margin-bottom: 48px; display: flex; align-items: center; gap: 20px; }
+  .insight-bar-text { font-family: var(--serif); font-size: 1.1rem; line-height: 1.5; font-style: italic; flex: 1; }
+  .insight-bar-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); flex-shrink: 0; writing-mode: vertical-rl; transform: rotate(180deg); }
+
+  /* SECTION LABEL */
+  .section-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--soft); margin-bottom: 20px; font-weight: 500; }
+
+  /* THREE STAGES */
+  .stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); margin-bottom: 48px; }
+  .stage { background: var(--white); padding: 28px 24px; position: relative; }
+  .stage-num { font-family: var(--serif); font-size: 3.5rem; color: var(--rule); line-height: 1; position: absolute; top: 16px; right: 20px; font-style: italic; }
+  .stage-tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); margin-bottom: 12px; font-weight: 500; }
+  .stage-name { font-family: var(--serif); font-size: 1.25rem; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+  .stage-blocker { font-size: 12px; color: var(--mid); line-height: 1.6; margin-bottom: 14px; font-weight: 300; }
+  .stage-fix { font-size: 12px; color: var(--ink); line-height: 1.5; padding-top: 12px; border-top: 1px solid var(--rule); font-weight: 400; }
+  .stage-fix::before { content: '→ '; color: var(--soft); }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+
+  /* FINDING BLOCK */
+  .finding-block { }
+  .finding-block .section-label { margin-bottom: 16px; }
+  .finding { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+  .finding-num { font-family: var(--serif); font-size: 1.2rem; color: var(--rule); flex-shrink: 0; line-height: 1.2; }
+  .finding-text { font-size: 13px; color: var(--mid); line-height: 1.65; font-weight: 300; }
+  .finding-text strong { color: var(--ink); font-weight: 500; }
+
+  /* INVISIBLE AI */
+  .invisible-block { background: var(--white); border: 1px solid var(--rule); padding: 28px; }
+  .invisible-block .section-label { margin-bottom: 16px; }
+  .invisible-stat-row { display: flex; gap: 24px; margin-bottom: 16px; }
+  .invisible-stat { flex: 1; }
+  .invisible-stat-num { font-family: var(--serif); font-size: 2rem; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+  .invisible-stat-label { font-size: 12px; color: var(--mid); line-height: 1.5; font-weight: 300; }
+  .invisible-note { font-size: 12px; color: var(--soft); line-height: 1.6; border-top: 1px solid var(--rule); padding-top: 14px; font-style: italic; }
+
+  /* WHAT WORKS TABLE */
+  .works-table { width: 100%; border-collapse: collapse; margin-bottom: 48px; }
+  .works-table th { text-align: left; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); padding: 10px 16px; border-bottom: 2px solid var(--ink); font-weight: 400; }
+  .works-table td { padding: 14px 16px; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--mid); line-height: 1.55; vertical-align: top; font-weight: 300; }
+  .works-table td:first-child { font-weight: 500; color: var(--ink); font-family: var(--serif); font-size: 14px; white-space: nowrap; }
+  .works-table tr:last-child td { border-bottom: none; }
+  .works-table tr:hover td { background: #f5f5f5; }
+
+  /* TOOL EMBED */
+  .tool-section { margin-bottom: 48px; }
+  .tool-section .section-label { margin-bottom: 20px; }
+  .tool-frame-wrap { background: var(--white); border: 1px solid var(--rule); overflow: hidden; }
+  .tool-frame-wrap iframe { width: 100%; height: 700px; border: none; display: block; }
+
+  /* CTA */
+  .cta-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px 28px; background: var(--white); border: 1px solid var(--rule); margin-bottom: 32px; }
+  .cta-left { }
+  .cta-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); margin-bottom: 6px; }
+  .cta-text { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); }
+  .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--white); font-family: var(--sans); font-size: 12px; font-weight: 500; padding: 12px 22px; text-decoration: none; letter-spacing: 0.04em; transition: opacity 0.2s; }
+  .cta-btn:hover { opacity: 0.8; }
+
+  /* FOOTER */
+  .footer { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--rule); }
+  .footer-left { font-size: 12px; color: var(--soft); line-height: 1.7; }
+  .footer-right { font-size: 11px; color: var(--soft); text-align: right; line-height: 1.7; }
+
+  /* ANIMATIONS */
+  .fade-in { opacity: 0; transform: translateY(16px); animation: fadeUp 0.6s ease forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .fade-in:nth-child(1) { animation-delay: 0.05s; }
+  .fade-in:nth-child(2) { animation-delay: 0.1s; }
+  .fade-in:nth-child(3) { animation-delay: 0.15s; }
+  .fade-in:nth-child(4) { animation-delay: 0.2s; }
+  .fade-in:nth-child(5) { animation-delay: 0.25s; }
+  .fade-in:nth-child(6) { animation-delay: 0.3s; }
+  .fade-in:nth-child(7) { animation-delay: 0.35s; }
+
+  @media (max-width: 640px) {
+    .page { padding: 32px 24px 48px; }
+    .header { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; }
+    .big-stat-row { grid-template-columns: 1fr; }
+    .stages { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .cta-bar { flex-direction: column; gap: 16px; align-items: flex-start; }
+    .tool-frame-wrap iframe { height: 900px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-logo" href="https://pmm-portfolio-ten.vercel.app">Deepali Kola — PMM Portfolio</a>
+    <a class="nav-back" href="https://pmm-portfolio-ten.vercel.app">← Back to portfolio</a>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="header fade-in">
+    <div class="header-left">
+      <div class="eyebrow">Research Findings · Apple Intelligence · March 2026</div>
+      <h1 class="title">The features are already<br>in their pocket.<br><em>Nobody activated them.</em></h1>
+    </div>
+    <div class="header-meta">
+      <div class="meta-line">Deepali Kola</div>
+      <div class="meta-line">W.P. Carey School of Business, ASU</div>
+      <div class="meta-line">Product Marketing Portfolio</div>
+    </div>
+  </div>
+
+  <!-- BIG STATS -->
+  <div class="big-stat-row fade-in">
+    <div class="big-stat">
+      <div class="big-stat-num">76%</div>
+      <div class="big-stat-label">of eligible users have not activated Apple Intelligence features</div>
+      <div class="big-stat-source">Morgan Stanley, 2025</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-stat-num">90%</div>
+      <div class="big-stat-label">of Americans use mobile AI features — but only 38% realise they do</div>
+      <div class="big-stat-source">Samsung / Gallup, 2025–2026</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-stat-num">70%+</div>
+      <div class="big-stat-label">of consumers worry about data privacy with digital services</div>
+      <div class="big-stat-source">Deloitte, 2024–2025</div>
+    </div>
+  </div>
+
+  <!-- INSIGHT BAR -->
+  <div class="insight-bar fade-in">
+    <div class="insight-bar-text">Adoption hesitation is not one thing. The 76% who have not activated are three distinct psychological states — each requiring a different message, a different proof point, and a different call to action.</div>
+    <div class="insight-bar-label">Core insight</div>
+  </div>
+
+  <!-- THREE STAGES -->
+  <div class="section-label fade-in">The three psychological stages</div>
+  <div class="stages fade-in">
+    <div class="stage">
+      <div class="stage-num">1</div>
+      <div class="stage-tag">Passive Upgrader</div>
+      <div class="stage-name">No personal<br>relevance found</div>
+      <div class="stage-blocker">Has the device. Updated the OS. Never consciously connected a feature to a moment in their life. May already be using AI features without recognising them.</div>
+      <div class="stage-fix">Show the outcome, not the feature. One job-to-be-done matched to their specific routine.</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">2</div>
+      <div class="stage-tag">Active Evaluator</div>
+      <div class="stage-name">Unresolved trust<br>question</div>
+      <div class="stage-blocker">Has researched. Holds a privacy or data concern that Apple's documentation has not answered to their satisfaction. Knows what Apple Intelligence can do.</div>
+      <div class="stage-fix">Acknowledge the concern before addressing it. On-device processing proof. Peer validation from skeptics who converted.</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">3</div>
+      <div class="stage-tag">Decision Paralysis</div>
+      <div class="stage-name">All the information.<br>Still hasn't acted.</div>
+      <div class="stage-blocker">Loss aversion — the perceived cost of being wrong feels irreversible. Multiple open tabs, no decision. Information is not the gap.</div>
+      <div class="stage-fix">Reversibility is the headline. One feature, not the suite. Give them the exit ramp before the on-ramp.</div>
+    </div>
+  </div>
+
+  <!-- TWO COL -->
+  <div class="two-col fade-in">
+    <!-- KEY FINDINGS -->
+    <div class="finding-block">
+      <div class="section-label">Key research findings</div>
+      <div class="finding">
+        <div class="finding-num">01</div>
+        <div class="finding-text"><strong>The label is the barrier, not the feature.</strong> 90% of users already use mobile AI — they just do not call it that. Naming Apple Intelligence as a system creates cognitive overhead that job-to-be-done framing removes entirely.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">02</div>
+        <div class="finding-text"><strong>Stage 2 users are not uninformed — they are skeptical.</strong> Privacy concern intensity is high across all markets. 82% of gen-AI users worry AI could be misused. Avoiding the concern in messaging confirms their suspicion.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">03</div>
+        <div class="finding-text"><strong>Choice overload drives Stage 3 deferral.</strong> Presenting the full Apple Intelligence feature set increases deferral. A single reversible feature — notification summaries, photo cleanup — with an explicit opt-out statement collapses the decision cost.</div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">04</div>
+        <div class="finding-text"><strong>In-flow prompts outperform settings pages by 50–70%.</strong> Stage 1 users do not fail to find information — they never encounter the feature at the moment of need. Contextual activation at the job surface is the highest-leverage intervention.</div>
+      </div>
+    </div>
+
+    <!-- INVISIBLE AI -->
+    <div class="invisible-block">
+      <div class="section-label">The invisible AI problem</div>
+      <div class="invisible-stat-row">
+        <div class="invisible-stat">
+          <div class="invisible-stat-num">99%</div>
+          <div class="invisible-stat-label">of Americans use an AI-enabled product weekly</div>
+        </div>
+        <div class="invisible-stat">
+          <div class="invisible-stat-num">36%</div>
+          <div class="invisible-stat-label">say they used AI in the last week when asked directly</div>
+        </div>
+      </div>
+      <div class="invisible-note">The 63-point gap between actual use and self-reported use means a significant portion of the 76% non-activation figure may already be using Apple Intelligence features — without identifying them as Apple Intelligence. The marketing problem is not just activation. It is attribution and identity formation around the feature set.</div>
+    </div>
+  </div>
+
+  <!-- WHAT WORKS TABLE -->
+  <div class="section-label fade-in">What the research says works — by stage</div>
+  <table class="works-table fade-in">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>What works</th>
+        <th>What does not work</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Stage 1<br>Passive Upgrader</td>
+        <td>Concrete JTBD framing at the moment of need. 'Turn long texts into a 30-second summary' at the share sheet — not on a settings page. Contextual in-flow prompts improve activation 75–85% vs static pages.</td>
+        <td>Leading with 'Apple Intelligence is now available.' Generic AI feature tours. Any headline that uses the word 'AI' before showing the outcome.</td>
+        <td>Agile Growth Labs, 2025; Samsung Mobile Press, 2025</td>
+      </tr>
+      <tr>
+        <td>Stage 2<br>Active Evaluator</td>
+        <td>Explicit acknowledgment of the data concern before any feature content. Private Cloud Compute named specifically — on-device processing is the strongest differentiator in category. Granular controls visible before CTA.</td>
+        <td>Passive reassurance ('we take your privacy seriously'). Leading with features before addressing the trust question. Framing ChatGPT integration as a default.</td>
+        <td>Deloitte, 2024–2025; Apple Newsroom, 2024</td>
+      </tr>
+      <tr>
+        <td>Stage 3<br>Decision Paralysis</td>
+        <td>Reversibility as the headline. One feature only — not the suite. 'Turn it off in 10 seconds anytime' as primary message, not disclaimer. Micro-commitment framing: start here, add more later.</td>
+        <td>Urgency. Multiple feature options. Any framing that implies the decision is permanent or difficult to undo. Complexity at the activation moment.</td>
+        <td>Decision science / Renascence, 2025; Samsung Galaxy AI adoption data, 2025</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TOOL EMBED -->
+  <div class="tool-section fade-in">
+    <div class="section-label">Live diagnostic tool — try it</div>
+    <div class="tool-frame-wrap">
+      <iframe src="https://deepali-activation-gap.tiiny.site/" title="Closing the Activation Gap — Live Diagnostic" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-bar fade-in">
+    <div class="cta-left">
+      <div class="cta-label">Open in full screen</div>
+      <div class="cta-text">Take the diagnostic without the frame</div>
+    </div>
+    <a class="cta-btn" href="https://deepali-activation-gap.tiiny.site/" target="_blank">
+      Open full screen →
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer fade-in">
+    <div class="footer-left">
+      Deepali Kola · W.P. Carey School of Business, ASU · March 2026<br>
+      Part of a three-project portfolio targeting AI product marketing roles
+    </div>
+    <div class="footer-right">
+      Sources: Morgan Stanley 2025 · Deloitte 2024–2025 · Gallup 2025<br>
+      Samsung 2025–2026 · Agile Growth Labs 2025 · CNET 2025
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
