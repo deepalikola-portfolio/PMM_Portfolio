@@ -1,0 +1,304 @@
+<h2 class="sr-only">Grid Bottleneck Diagnostic — identifies power infrastructure pain points for data center, utility, and renewable energy ICPs</h2>
+
+<style>
+  .gbd-wrap { max-width: 640px; margin: 0 auto; padding: 2rem 0; font-family: var(--font-sans); }
+  .gbd-header { margin-bottom: 2rem; }
+  .gbd-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.5rem; }
+  .gbd-title { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 0.5rem; }
+  .gbd-sub { font-size: 14px; color: var(--color-text-secondary); margin: 0; line-height: 1.6; }
+  .gbd-step { display: none; }
+  .gbd-step.active { display: block; }
+  .gbd-q { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 0.25rem; line-height: 1.5; }
+  .gbd-qsub { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 1.25rem; }
+  .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+  .opt-btn { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 14px 16px; text-align: left; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .opt-btn:hover { background: var(--color-background-secondary); }
+  .opt-btn.selected { border: 1.5px solid #1D9E75; background: #E1F5EE; }
+  .opt-label { font-size: 14px; font-weight: 500; color: var(--color-text-primary); display: block; margin-bottom: 2px; }
+  .opt-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+  .opt-btn.selected .opt-label { color: #0F6E56; }
+  .opt-btn.selected .opt-desc { color: #0F6E56; opacity: 0.8; }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
+  .progress-dots { display: flex; gap: 6px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-border-secondary); transition: background 0.2s; }
+  .dot.done { background: #1D9E75; }
+  .dot.active { background: #1D9E75; }
+  .btn-next { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 8px 20px; font-size: 14px; cursor: pointer; color: var(--color-text-primary); }
+  .btn-next:hover { background: var(--color-background-secondary); }
+  .btn-next.primary { background: #1D9E75; color: #fff; border-color: #1D9E75; }
+  .btn-next.primary:hover { background: #0F6E56; }
+  .btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
+  .result-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+  .result-tag { display: inline-block; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 10px; border-radius: var(--border-radius-md); margin-bottom: 0.75rem; background: #E1F5EE; color: #0F6E56; }
+  .result-headline { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 0.5rem; line-height: 1.4; }
+  .result-body { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 1rem; }
+  .result-divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1rem 0; }
+  .result-section-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.5rem; }
+  .result-insight { font-size: 14px; color: var(--color-text-primary); font-weight: 500; margin: 0 0 0.25rem; }
+  .result-insight-sub { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 0.75rem; line-height: 1.5; }
+  .restart-btn { font-size: 13px; color: var(--color-text-tertiary); background: none; border: none; cursor: pointer; padding: 0; margin-top: 1rem; }
+  .restart-btn:hover { color: var(--color-text-secondary); }
+  .icp-select-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+  .icp-btn { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 16px 12px; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .icp-btn:hover { background: var(--color-background-secondary); }
+  .icp-icon { font-size: 20px; margin-bottom: 6px; }
+  .icp-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .icp-role { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+</style>
+
+<div class="gbd-wrap">
+  <div class="gbd-header">
+    <p class="gbd-label">Heron Power · Grid Bottleneck Diagnostic</p>
+    <h1 class="gbd-title">Where is your grid infrastructure stalling?</h1>
+    <p class="gbd-sub">3 questions. Identifies your specific bottleneck and how next-gen power conversion hardware removes it.</p>
+  </div>
+
+  <div class="gbd-step active" id="step-icp">
+    <p class="gbd-q">Which best describes your role?</p>
+    <p class="gbd-qsub">This determines which bottlenecks are most relevant to you.</p>
+    <div class="icp-select-grid">
+      <button class="icp-btn" onclick="selectICP('dc', this)">
+        <div class="icp-icon">⚡</div>
+        <div class="icp-name">Data center</div>
+        <div class="icp-role">Developer / operator</div>
+      </button>
+      <button class="icp-btn" onclick="selectICP('utility', this)">
+        <div class="icp-icon">🔌</div>
+        <div class="icp-name">Utility</div>
+        <div class="icp-role">Grid planner / engineer</div>
+      </button>
+      <button class="icp-btn" onclick="selectICP('ipp', this)">
+        <div class="icp-icon">☀️</div>
+        <div class="icp-name">Renewable developer</div>
+        <div class="icp-role">IPP / project developer</div>
+      </button>
+    </div>
+    <div class="nav-row">
+      <div class="progress-dots">
+        <div class="dot active" id="d0"></div>
+        <div class="dot" id="d1"></div>
+        <div class="dot" id="d2"></div>
+      </div>
+      <button class="btn-next" id="btn-icp" disabled onclick="goToQ1()">Next →</button>
+    </div>
+  </div>
+
+  <div class="gbd-step" id="step-q1">
+    <p class="gbd-q" id="q1-text"></p>
+    <p class="gbd-qsub" id="q1-sub"></p>
+    <div class="opt-grid" id="q1-opts"></div>
+    <div class="nav-row">
+      <div class="progress-dots">
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot" id="d2b"></div>
+      </div>
+      <button class="btn-next" id="btn-q1" disabled onclick="goToQ2()">Next →</button>
+    </div>
+  </div>
+
+  <div class="gbd-step" id="step-q2">
+    <p class="gbd-q" id="q2-text"></p>
+    <p class="gbd-qsub" id="q2-sub"></p>
+    <div class="opt-grid" id="q2-opts"></div>
+    <div class="nav-row">
+      <div class="progress-dots">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+      </div>
+      <button class="btn-next primary" id="btn-q2" disabled onclick="showResult()">See my diagnosis →</button>
+    </div>
+  </div>
+
+  <div class="gbd-step" id="step-result">
+    <div class="result-card" id="result-content"></div>
+    <button class="restart-btn" onclick="restart()">← Start over</button>
+  </div>
+</div>
+
+<script>
+const state = { icp: null, q1: null, q2: null };
+
+const questions = {
+  dc: {
+    q1: {
+      text: "What's blocking your next facility's power delivery?",
+      sub: "Pick the constraint most affecting your current pipeline.",
+      opts: [
+        { label: "Interconnection queue", desc: "Grid access delays pushing timelines 2–4 years out" },
+        { label: "Transformer lead times", desc: "18–24 month equipment waits blocking commissioning" },
+        { label: "Substation capacity", desc: "No available capacity near target sites" },
+        { label: "Cost overruns", desc: "Power infrastructure eating project margin" }
+      ]
+    },
+    q2: {
+      text: "When power infrastructure delays occur, what's the downstream impact?",
+      sub: "Select the outcome that most directly affects your business.",
+      opts: [
+        { label: "Missed customer commitments", desc: "SLAs and capacity reservations at risk" },
+        { label: "Stranded capital", desc: "Signed leases and hardware sitting idle" },
+        { label: "Competitive disadvantage", desc: "Rivals commissioning faster in same markets" },
+        { label: "IRR erosion", desc: "Financing costs accumulating on delayed assets" }
+      ]
+    }
+  },
+  utility: {
+    q1: {
+      text: "What's your biggest constraint hitting 2030 load projections?",
+      sub: "Select the primary bottleneck in your grid upgrade planning.",
+      opts: [
+        { label: "Equipment procurement", desc: "Transformer and substation lead times exceeding planning cycles" },
+        { label: "Capital allocation", desc: "Rate case cycles slower than load growth" },
+        { label: "Land and permitting", desc: "Siting constraints limiting substation expansion" },
+        { label: "Workforce capacity", desc: "Engineering and construction bandwidth at ceiling" }
+      ]
+    },
+    q2: {
+      text: "Where is load growth most straining your current infrastructure?",
+      sub: "Pick the demand category creating the most urgent capacity pressure.",
+      opts: [
+        { label: "Data center interconnection", desc: "Large load requests overwhelming queue capacity" },
+        { label: "EV fleet charging", desc: "Distribution-level demand spikes from depot charging" },
+        { label: "Industrial electrification", desc: "Large commercial/industrial load shifting from gas" },
+        { label: "Residential solar + storage", desc: "Bidirectional flows destabilizing distribution circuits" }
+      ]
+    }
+  },
+  ipp: {
+    q1: {
+      text: "What's killing your interconnection timeline?",
+      sub: "Select the constraint most affecting your project's path to revenue.",
+      opts: [
+        { label: "Queue position and wait times", desc: "Cluster study delays adding years to commercial operation" },
+        { label: "Network upgrade costs", desc: "Allocated upgrade costs making projects uneconomic" },
+        { label: "Substation availability", desc: "No available interconnection points near project sites" },
+        { label: "Equipment procurement", desc: "Transformer and inverter lead times extending COD" }
+      ]
+    },
+    q2: {
+      text: "What's the primary financial pressure from interconnection delays?",
+      sub: "Select the metric most directly impacted.",
+      opts: [
+        { label: "Project IRR erosion", desc: "Financing costs accumulating pre-revenue" },
+        { label: "PPA expiration risk", desc: "Offtake agreements at risk from delayed COD" },
+        { label: "ITC/PTC deadline exposure", desc: "Tax credit eligibility windows closing" },
+        { label: "Portfolio allocation shift", desc: "Capital redirecting to lower-friction markets" }
+      ]
+    }
+  }
+};
+
+const results = {
+  dc: {
+    default: {
+      tag: "Data center · Power delivery gap",
+      headline: "Your bottleneck is not compute — it's the hardware between the grid and your facility.",
+      body: "Data center development timelines are increasingly determined by transformer procurement and interconnection queue position, not by site selection or compute hardware. The conventional substation equipment supply chain was not built for the current pace of hyperscale demand growth.",
+      insight1: "Where solid-state conversion changes the equation",
+      insight1_sub: "Software-integrated power conversion hardware can compress commissioning timelines and reduce the physical footprint of substation infrastructure — reducing the lead-time exposure that is currently stranding capital across the development pipeline.",
+      insight2: "The market signal Heron Power is responding to",
+      insight2_sub: "40GW of planned US manufacturing capacity targets exactly this constraint: a procurement market where incumbent transformer suppliers cannot meet current demand growth, and where data center developers need a credible alternative supply chain."
+    }
+  },
+  utility: {
+    default: {
+      tag: "Utility · Grid upgrade gap",
+      headline: "Load growth is outpacing the upgrade cycle that conventional procurement was built for.",
+      body: "Utility planning cycles operate on 5–10 year horizons. The current load growth curve from data centers, EVs, and industrial electrification is compressing that timeline. Equipment procurement — not capital or permitting — is increasingly the rate-limiting step.",
+      insight1: "Where next-gen hardware fits the planning cycle",
+      insight1_sub: "Modular, software-integrated power conversion hardware offers a path to faster deployment and higher utilization per substation footprint — compressing the gap between load forecast and infrastructure readiness.",
+      insight2: "The manufacturing constraint Heron is solving",
+      insight2_sub: "The planned 40GW US facility addresses a supply chain gap that utilities are already feeling: transformer and high-power conversion equipment lead times that exceed planning windows for near-term load growth."
+    }
+  },
+  ipp: {
+    default: {
+      tag: "Renewable developer · Interconnection gap",
+      headline: "The constraint is not your project — it's the infrastructure between your generation asset and the grid.",
+      body: "Interconnection queue delays and network upgrade cost allocations are the dominant IRR risk for renewable developers today. The underlying cause: grid infrastructure that was not designed for the pace and geographic distribution of new renewable capacity.",
+      insight1: "Where converter hardware changes project economics",
+      insight1_sub: "Advanced power conversion hardware that reduces network upgrade requirements — or integrates more efficiently with existing substation infrastructure — directly improves project economics and reduces the interconnection cost exposure that is making projects uneconomic.",
+      insight2: "Why Heron Power is relevant to your pipeline",
+      insight2_sub: "Solid-state transformers and software-integrated converters can reduce the substation infrastructure burden on renewable interconnection — compressing the upgrade cost allocations that are currently stranding permitted capacity across the interconnection queue."
+    }
+  }
+};
+
+function selectICP(icp, el) {
+  document.querySelectorAll('.icp-btn').forEach(b => b.style.cssText = '');
+  el.style.cssText = 'border: 1.5px solid #1D9E75; background: #E1F5EE;';
+  el.querySelector('.icp-name').style.color = '#0F6E56';
+  state.icp = icp;
+  document.getElementById('btn-icp').disabled = false;
+  document.getElementById('btn-icp').classList.add('primary');
+}
+
+function buildOpts(containerId, opts, qKey) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-label">${opt.label}</span><span class="opt-desc">${opt.desc}</span>`;
+    btn.onclick = () => {
+      document.querySelectorAll(`#${containerId} .opt-btn`).forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state[qKey] = opt.label;
+      const nextId = qKey === 'q1' ? 'btn-q1' : 'btn-q2';
+      const nextBtn = document.getElementById(nextId);
+      nextBtn.disabled = false;
+      nextBtn.classList.add('primary');
+    };
+    container.appendChild(btn);
+  });
+}
+
+function goToQ1() {
+  if (!state.icp) return;
+  const q = questions[state.icp].q1;
+  document.getElementById('q1-text').textContent = q.text;
+  document.getElementById('q1-sub').textContent = q.sub;
+  buildOpts('q1-opts', q.opts, 'q1');
+  showStep('step-q1');
+}
+
+function goToQ2() {
+  if (!state.q1) return;
+  const q = questions[state.icp].q2;
+  document.getElementById('q2-text').textContent = q.text;
+  document.getElementById('q2-sub').textContent = q.sub;
+  buildOpts('q2-opts', q.opts, 'q2');
+  showStep('step-q2');
+}
+
+function showResult() {
+  const r = results[state.icp].default;
+  const html = `
+    <span class="result-tag">${r.tag}</span>
+    <p class="result-headline">${r.headline}</p>
+    <p class="result-body">${r.body}</p>
+    <hr class="result-divider">
+    <p class="result-section-label">Diagnosis</p>
+    <p class="result-insight">${r.insight1}</p>
+    <p class="result-insight-sub">${r.insight1_sub}</p>
+    <p class="result-insight">${r.insight2}</p>
+    <p class="result-insight-sub">${r.insight2_sub}</p>
+  `;
+  document.getElementById('result-content').innerHTML = html;
+  showStep('step-result');
+}
+
+function showStep(id) {
+  document.querySelectorAll('.gbd-step').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function restart() {
+  state.icp = null; state.q1 = null; state.q2 = null;
+  document.querySelectorAll('.icp-btn').forEach(b => { b.style.cssText = ''; b.querySelector('.icp-name').style.color = ''; });
+  document.getElementById('btn-icp').disabled = true;
+  document.getElementById('btn-icp').classList.remove('primary');
+  showStep('step-icp');
+}
+</script>
